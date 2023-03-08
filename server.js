@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
   // Use req.log (a `pino` instance) to log JSON:
   req.log.info({message: 'Hello from Node.js Starter Application!'});
   res.set('Refresh', 10);
-  res.send(`<html><head><title>Sample OpenShift App</title></head><body><h1>${new Date().toString()}</h1></body></html>`);
+  res.send(`<html><head><title>Sample OpenShift App</title></head><body><h1>${new Date().toString()}</h1>${process.env.NODE_NAME || ''}</body></html>`);
 });
 
 app.get('*', (req, res) => {
