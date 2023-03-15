@@ -1,7 +1,7 @@
 const Prometheus = require('prom-client')
 const express = require('express');
 const http = require('http');
-const crypto = require('crypto');
+const os = require('os');
 
 Prometheus.collectDefaultMetrics();
 
@@ -25,8 +25,6 @@ const requestTimer = (req, res, next) => {
   })
   next()
 }
-
-const startupUUID = crypto.randomUUID();
 
 const app = express();
 const server = http.createServer(app)
@@ -57,7 +55,7 @@ app.get('/', (req, res) => {
   // Use req.log (a `pino` instance) to log JSON:
   req.log.info({message: 'Hello from Node.js Starter Application!'});
   res.set('Refresh', 10);
-  res.send(`<html><head><title>Sample OpenShift App</title></head><body><h1>${new Date().toLocaleTimeString('en-US')}</h1>${process.env.NODE_NAME || ''}</h1>${startupUUID}</body></html>`);
+  res.send(`<html><head><title>Sample OpenShift App</title></head><body><h1>${new Date().toLocaleTimeString('en-US')}</h1>${os.hostname() || ''}</body></html>`);
 });
 
 app.get('*', (req, res) => {
